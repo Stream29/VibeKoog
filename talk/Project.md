@@ -45,6 +45,6 @@ The agent should be able to have a multi-turn conversation.
 
 ## Development
 
-You must write tests for your code.
+You must write tests for your code and make them all pass.
 
-You must keep a clear structure of your code and make refactors when necessary.
+You must keep your code concise. Make it a MVP.
