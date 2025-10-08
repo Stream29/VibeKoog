@@ -42,3 +42,9 @@ The TUI should be interactive, always showing the status of the agent.
 Users can input prompts to the agent through a chatbox.
 The status update of the agent should be shown correctly.
 The agent should be able to have a multi-turn conversation.
+
+## Development
+
+You must write tests for your code.
+
+You must keep a clear structure of your code and make refactors when necessary.
