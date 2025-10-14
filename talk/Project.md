@@ -8,11 +8,21 @@ Koog is an AI agent framework built by JetBrains.
 
 You can read its source code and readme at `reference/koog`.
 
+You can read its example at `reference/koog/examples`.
+
 ### SimpleMainKts
 
 SimpleMainKts is an example of using Kotlin MainKts scripting.
 
 You can read its source code and readme at `reference/SimpleMainKts`.
+
+### Mosaic
+
+Mosaic is a compose-styled TUI framework built by JakeWharton.
+
+You can read its source code and readme at `reference/mosaic`.
+
+You can read its example at `reference/mosaic/samples`.
 
 ## Core Logic
 
