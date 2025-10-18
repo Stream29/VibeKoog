@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm") version "2.2.20"
     kotlin("plugin.serialization") version "2.2.20"
-    kotlin("plugin.compose") version "2.2.20"
 }
 
 group = "io.github.stream29"
