@@ -16,14 +16,6 @@ SimpleMainKts is an example of using Kotlin MainKts scripting.
 
 You can read its source code and readme at `reference/SimpleMainKts`.
 
-### Mosaic
-
-Mosaic is a compose-styled TUI framework built by JakeWharton.
-
-You can read its source code and readme at `reference/mosaic`.
-
-You can read its example at `reference/mosaic/samples`.
-
 ## Core Logic
 
 This project uses the Koog framework to build a coding agent.
@@ -77,13 +69,12 @@ This tool should update the view model to append a message to the user.
 
 ## Interface
 
-The agent should use `JakeWharton/mosaic` to build a TUI.
-The TUI should be interactive, always showing the status of the agent.
+The agent should use `kotlinx.coroutines` to build a TUI.
+The TUI should be interactive, updating with the status of the agent.
 Users can input prompts to the agent through a chatbox.
 The status update of the agent should be shown correctly.
-(Store the events in a `List` in the view model and show them!)
 The agent should be able to have a multi-turn conversation.
-The tool calls and its result should be recorded as events and shown in the TUI.
+The tool calls and its result should be shown in the TUI.
 
 ## Development
 

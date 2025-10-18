@@ -13,8 +13,10 @@ repositories {
 }
 
 dependencies {
-    implementation("com.jakewharton.mosaic:mosaic-runtime:0.18.0")
     implementation("ai.koog:koog-agents:0.5.0")
+    implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:2.2.20")
+    implementation("org.jetbrains.kotlin:kotlin-main-kts:2.2.20")
+    implementation("org.apache.ivy:ivy:2.5.3")
     testImplementation(kotlin("test"))
 }
 

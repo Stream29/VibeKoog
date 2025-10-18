@@ -4,6 +4,3 @@
 [submodule "reference/SimpleMainKts"]
 	path = reference/SimpleMainKts
 	url = git@github.com:Stream29/SimpleMainKts.git
-[submodule "reference/mosaic"]
-	path = reference/mosaic
-	url = https://github.com/JakeWharton/mosaic.git
