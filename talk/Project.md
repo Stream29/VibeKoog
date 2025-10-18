@@ -6,29 +6,44 @@
 
 Koog is an AI agent framework built by JetBrains.
 
-You can read its source code and readme at `reference/koog`.
+You can read its source code at `reference/koog`.
 
-You can read its example at `reference/koog/examples`.
+You can read its examples at `reference/koog/examples`.
 
 ### SimpleMainKts
 
 SimpleMainKts is an example of using Kotlin MainKts scripting.
 
-You can read its source code and readme at `reference/SimpleMainKts`.
+You can read its source code at `reference/SimpleMainKts/app/src/main/kotlin/io/github/stream29/simplemainkts/app/App.kt`.
 
 ## Core Logic
 
 This project uses the Koog framework to build a coding agent.
 
-This project uses Anthropic `claude-sonnet-4-5-20250929` model.
+This project uses Anthropic `claude-sonnet-4-5-20250929` model. (`AnthropicModels.Sonnet_4_5`)
 The api key should be set in `local.properties` or environment variables and named `ANTHROPIC_API_KEY`, read in runtime. 
 
 ## Agent Strategy
 
-The default strategy of a Koog agent is single-run.
-We need to change the strategy to not ending and chat with tools.
-You should define an agent strategy graph to implement that.
-(Agent loops with calling tools)
+We need a strategy that always only produces and processed tool calls.
+This must be done by the following strategy: 
+
+```kotlin
+strategy("coding_agent_strategy") {
+    val forceTool by node<String, String> { input ->
+        llm.writeSession {
+            prompt = prompt.withUpdatedParams {
+                toolChoice = LLMParams.ToolChoice.Required
+            }
+        }
+        input
+    }
+    val parallelStrategySubgraph = singleRunStrategy(ToolCalls.PARALLEL)
+    nodeStart then forceTool then parallelStrategySubgraph then nodeFinish
+}
+```
+
+You mustn't use any other strategy than this.
 
 ### Tools
 
@@ -65,19 +80,22 @@ The user input should be returned to the agent.
 #### SayToUser
 
 `SayToUser` to say something to the user.
-This tool should update the view model to append a message to the user.
 
 ## Interface
 
-The agent should use `kotlinx.coroutines` to build a TUI.
-The TUI should be interactive, updating with the status of the agent.
-Users can input prompts to the agent through a chatbox.
-The status update of the agent should be shown correctly.
+The agent should use `println` and `readln` with `kotlinx.coroutines` to build a non-blocking TUI.
+Users can input prompts to the agent.
 The agent should be able to have a multi-turn conversation.
-The tool calls and its result should be shown in the TUI.
+The first input from user is passed the parameter of the agent.
+Then user can only input after `WaitForUserInput`.
+The tool calls and its result should be logged in the console.
 
 ## Development
 
 You must write tests for your code and make them all pass.
 
 You must keep your code concise. Make it an MVP.
+
+Dependencies are already included in `build.gradle.kts`.
+
+You should read the examples of Koog before you define agent, tools and strategies.
