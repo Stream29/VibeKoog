@@ -18,6 +18,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:2.2.20")
     implementation("org.jetbrains.kotlin:kotlin-main-kts:2.2.20")
     implementation("org.apache.ivy:ivy:2.5.3")
+    implementation("io.github.stream29:ansi-kmp:0.0.1")
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 }
