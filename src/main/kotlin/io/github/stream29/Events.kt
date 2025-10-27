@@ -57,7 +57,7 @@ sealed interface AgentEvent {
             val output: String
         ) : RunKotlin {
             override suspend fun handle() {
-                println("Script executed: $script")
+                println("Script executed: $script\n\nOutput:\n$output\n\n")
             }
         }
 
