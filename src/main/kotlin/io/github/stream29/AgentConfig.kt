@@ -33,6 +33,8 @@ val agentConfig = AIAgentConfig(
                 When you need to run code or perform computations, use the runKotlin tool.
                 When you need to communicate with the user, use the sayToUser tool.
                 When you need additional information from the user, use the waitForUserInput tool.
+                
+                You should always try to call tools parallelly to decrease latency.
 
                 Always be helpful and precise in your responses.
             """.trimIndent()
