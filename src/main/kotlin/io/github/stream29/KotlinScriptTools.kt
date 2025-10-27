@@ -3,6 +3,7 @@ package io.github.stream29
 import ai.koog.agents.core.tools.annotations.LLMDescription
 import ai.koog.agents.core.tools.annotations.Tool
 import ai.koog.agents.core.tools.reflect.ToolSet
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.serialization.Serializable
 import org.jetbrains.kotlin.mainKts.MainKtsScript
 import java.io.ByteArrayOutputStream
@@ -18,7 +19,7 @@ import kotlin.script.experimental.jvmhost.BasicJvmScriptingHost
 
 @Suppress("unused")
 @LLMDescription("Tool to run Kotlin scripts")
-class KotlinScriptTools : ToolSet {
+class KotlinScriptTools(val eventBus: SendChannel<AgentEvent>) : ToolSet {
     @Serializable
     enum class ScriptOutputMode {
         Console, Return
@@ -78,20 +79,32 @@ class KotlinScriptTools : ToolSet {
 
     @Tool
     @LLMDescription("Run a Kotlin MainKts script. The script can use Maven dependencies with @file:DependsOn annotation. The last line of the script is the return value.")
-    fun runKotlin(
+    suspend fun runKotlin(
         @LLMDescription("The Kotlin MainKts script to execute")
         script: String,
         @LLMDescription("Output mode: 'Console' to capture console output, 'Return' to get the return value")
         output: ScriptOutputMode
     ): String {
+        suspend fun String.alsoSendSuccessEvent(): String =
+            also { eventBus.send(AgentEvent.RunKotlin.Success(script, it)) }
+
+        suspend fun String.alsoSendCompilationFailureEvent(): String =
+            also { eventBus.send(AgentEvent.RunKotlin.CompilationFailure(script, it)) }
+
+        suspend fun String.alsoSendRuntimeFailureEvent(): String =
+            also { eventBus.send(AgentEvent.RunKotlin.RuntimeFailure(script, it)) }
+
         return when (val result = eval(script)) {
             is ScriptEvaluationResult.Success -> when (output) {
                 ScriptOutputMode.Console -> result.consoleOutput
                 ScriptOutputMode.Return -> result.returnValue.toString()
-            }
+            }.alsoSendSuccessEvent()
 
-            is ScriptEvaluationResult.CompilationFailure -> "Compilation failed: \n${result.message}"
-            is ScriptEvaluationResult.RuntimeFailure -> "Execution failed: \n${result.exception.stackTraceToString()}"
+            is ScriptEvaluationResult.CompilationFailure ->
+                "Compilation failed: \n${result.message}".alsoSendCompilationFailureEvent()
+
+            is ScriptEvaluationResult.RuntimeFailure ->
+                "Execution failed: \n${result.exception.stackTraceToString()}".alsoSendRuntimeFailureEvent()
         }
     }
 }

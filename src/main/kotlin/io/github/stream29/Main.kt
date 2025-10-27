@@ -3,8 +3,13 @@ package io.github.stream29
 import ai.koog.agents.core.agent.AIAgent
 import ai.koog.agents.core.tools.ToolRegistry
 import ai.koog.agents.core.tools.reflect.tools
-import ai.koog.agents.features.eventHandler.feature.handleEvents
 import ai.koog.prompt.executor.llms.all.simpleAnthropicExecutor
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 suspend fun main() {
     hackSlf4j()
@@ -13,30 +18,28 @@ suspend fun main() {
     println("=".repeat(60))
     println()
     val apiKey = Config.apiKey
+    val eventBus = Channel<AgentEvent>(Channel.BUFFERED)
     val toolRegistry = ToolRegistry {
-        tools(FileTools())
-        tools(CommunicationTools())
-        tools(KotlinScriptTools())
+        tools(FileTools(eventBus))
+        tools(CommunicationTools(eventBus))
+        tools(KotlinScriptTools(eventBus))
     }
-
     val agent = AIAgent(
         promptExecutor = simpleAnthropicExecutor(apiKey),
         strategy = codingAgentStrategy,
         agentConfig = agentConfig,
         toolRegistry = toolRegistry
-    ) {
-        handleEvents {
-            onToolCallCompleted { toolCall ->
-                val toolName = toolCall.tool.name
-                if (toolName == "sayToUser" || toolName == "waitForUserInput") return@onToolCallCompleted
-                println("[Tool Call] $toolName")
-                println("[Tool Call Args] ${toolCall.toolArgs}")
-                println("[Tool Call Output] ${toolCall.result}")
+    )
+    withContext(Dispatchers.IO) {
+        launch {
+            while (true) {
+                eventBus.consumeEach { it.handle() }
             }
         }
+        launch {
+            val input = CompletableDeferred<String>()
+            eventBus.send(AgentEvent.WaitForUserInput(input))
+            agent.run(input.await())
+        }
     }
-    print("[User]: ")
-    val userInput = readln()
-
-    agent.run(userInput)
 }
