@@ -20,12 +20,12 @@ You can read its source code at `reference/SimpleMainKts/app/src/main/kotlin/io/
 
 This project uses the Koog framework to build a coding agent.
 
-This project uses Anthropic `claude-sonnet-4-5-20250929` model. (`AnthropicModels.Sonnet_4_5`)
+This project uses Anthropic `claude-haiku-4-5` model. (`AnthropicModels.Haiku_4_5`)
 The api key should be set in `local.properties` or environment variables and named `ANTHROPIC_API_KEY`, read in runtime. 
 
 ## Agent Strategy
 
-We need a strategy that always only produces and processed tool calls.
+We need a strategy that always only produces and processes tool calls.
 This must be done by the following strategy: 
 
 ```kotlin
@@ -49,16 +49,10 @@ You mustn't use any other strategy than this.
 
 The agent has those main tools:
 
-#### ReadFile
+#### Filesystem Tools
 
-`ReadFile` to read files. Three parameters: `path`, `from_line`, `to_line`. The two last parameters are optional. 
-If the content of the file is too big, return with a warning that the content is too big and `from_line` and `to_line` should be used to limit the size.
-
-#### WriteFile
-
-`WriteFile` to write files. Four parameters: `path` , `original_content`, `edited_content`, `replace_all`.
-If `replace_all` is true, replace all the `original_content` of the file with `edited_content`.
-If `replace_all` is false and `original_content` occurs multiple times in the file, do nothing and return a warning.
+These tools are builtin by the Koog framework itself. 
+Their names are: `ReadFileTool`, `ListDirectoryTool`, `EditFileTool`.
 
 #### RunKotlin
 
@@ -86,7 +80,7 @@ The user input should be returned to the agent.
 The agent should use `println` and `readln` with `kotlinx.coroutines` to build a non-blocking TUI.
 Users can input prompts to the agent.
 The agent should be able to have a multi-turn conversation.
-The first input from user is passed the parameter of the agent.
+The first input from the user is passed to the parameter of the agent.
 Then user can only input after `WaitForUserInput`.
 The tool calls and its result should be logged in the console.
 
