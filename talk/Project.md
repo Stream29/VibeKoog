@@ -38,7 +38,7 @@ strategy("coding_agent_strategy") {
         }
         input
     }
-    val parallelStrategySubgraph = singleRunStrategy(ToolCalls.PARALLEL)
+    val parallelStrategySubgraph = singleRunStrategy()
     nodeStart then forceTool then parallelStrategySubgraph then nodeFinish
 }
 ```
