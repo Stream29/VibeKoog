@@ -20,7 +20,7 @@ You can read its source code at `reference/SimpleMainKts/app/src/main/kotlin/io/
 
 This project uses the Koog framework to build a coding agent.
 
-This project uses Anthropic `claude-haiku-4-5` model. (`AnthropicModels.Haiku_4_5`)
+This project uses Anthropic `claude-sonnet-4-5` model. (`AnthropicModels.Sonnet_4_5`)
 The api key should be set in `local.properties` or environment variables and named `ANTHROPIC_API_KEY`, read in runtime. 
 
 ## Agent Strategy
@@ -38,7 +38,7 @@ strategy("coding_agent_strategy") {
         }
         input
     }
-    val parallelStrategySubgraph = singleRunStrategy()
+    val parallelStrategySubgraph = singleRunStrategy(ToolCalls.PARALLEL)
     nodeStart then forceTool then parallelStrategySubgraph then nodeFinish
 }
 ```
