@@ -57,6 +57,7 @@ Their names are: `ReadFileTool`, `ListDirectoryTool`, `EditFileTool`.
 #### RunKotlin
 
 `RunKotlin` to run MainKts Kotlin scripts. Two parameters: `script` and `output`.
+`script` is the content of the script.
 If `output` is `console`, capture the console output of the script and return it to the agent.
 If `output` is `return`, return the returned value of the script to the agent.
 You should declare the usage of the `RunKotlin` tool in the description.
