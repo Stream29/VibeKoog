@@ -87,6 +87,8 @@ The user input should be returned to the agent.
 
 `SayToUser` to say something to the user.
 
+You shouldn't use `toTextSerializer`. Use the original serializer of the result.
+
 ## Interface
 
 The agent should use `println` and `readln` with `kotlinx.coroutines` to build a non-blocking TUI.
