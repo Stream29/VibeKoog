@@ -20,7 +20,7 @@ You can read its source code at `reference/SimpleMainKts/app/src/main/kotlin/io/
 
 This project uses the Koog framework to build a coding agent.
 
-This project uses Anthropic `claude-sonnet-4-5` model. (`AnthropicModels.Sonnet_4_5`)
+This project uses Anthropic `claude-haiku-4-5` model. (`AnthropicModels.Haiku_4_5`)
 The api key should be set in `local.properties` or environment variables and named `ANTHROPIC_API_KEY`, read in runtime. 
 
 ## Agent Strategy
@@ -43,7 +43,7 @@ strategy("coding_agent_strategy") {
         }
         input
     }
-    val parallelStrategySubgraph = singleRunStrategy(ToolCalls.PARALLEL)
+    val parallelStrategySubgraph = singleRunStrategy()
     nodeStart then forceTool then parallelStrategySubgraph then nodeFinish
 }
 ```
@@ -54,10 +54,16 @@ You mustn't use any other strategy than this.
 
 The agent has those main tools:
 
-#### Filesystem Tools
+#### ReadFile
 
-These tools are builtin by the Koog framework itself. 
-Their names are: `ReadFileTool`, `ListDirectoryTool`, `EditFileTool`.
+`ReadFile` to read files. Three parameters: `path`, `from_line`, `to_line`. The two last parameters are optional.
+If the content of the file is too big, return with a warning that the content is too big and `from_line` and `to_line` should be used to limit the size.
+
+#### WriteFile
+
+`WriteFile` to write files. Four parameters: `path` , `original_content`, `edited_content`, `replace_all`.
+If `replace_all` is true, replace all the `original_content` of the file with `edited_content`.
+If `replace_all` is false and `original_content` occurs multiple times in the file, do nothing and return a warning.
 
 #### RunKotlin
 
