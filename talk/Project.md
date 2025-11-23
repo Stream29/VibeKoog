@@ -29,6 +29,11 @@ We need a strategy that always only produces and processes tool calls.
 This must be done by the following strategy: 
 
 ```kotlin
+import ai.koog.agents.core.agent.ToolCalls
+import ai.koog.agents.core.agent.singleRunStrategy
+import ai.koog.agents.core.dsl.builder.strategy
+import ai.koog.prompt.params.LLMParams
+
 strategy("coding_agent_strategy") {
     val forceTool by node<String, String> { input ->
         llm.writeSession {
