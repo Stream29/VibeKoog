@@ -1,9 +1,9 @@
-package io.github.stream29.kode.app
+package io.github.stream29.vibekoog.app
 
 import ai.koog.agents.core.tools.annotations.LLMDescription
 import ai.koog.agents.core.tools.annotations.Tool
 import ai.koog.agents.core.tools.reflect.ToolSet
-import io.github.stream29.kode.app.viewmodel.MainViewModel
+import io.github.stream29.vibekoog.app.viewmodel.MainViewModel
 
 @Suppress("unused")
 @LLMDescription("Tools to communicate with user")

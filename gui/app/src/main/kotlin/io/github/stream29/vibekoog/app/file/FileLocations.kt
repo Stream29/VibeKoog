@@ -1,4 +1,4 @@
-package io.github.stream29.kode.app.file
+package io.github.stream29.vibekoog.app.file
 
 import java.io.File
 

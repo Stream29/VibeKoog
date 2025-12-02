@@ -1,4 +1,4 @@
-package io.github.stream29.kode.app.view
+package io.github.stream29.vibekoog.app.view
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import io.github.stream29.kode.app.viewmodel.MainViewModel
+import io.github.stream29.vibekoog.app.viewmodel.MainViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

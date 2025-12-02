@@ -1,4 +1,4 @@
-package io.github.stream29.kode.dispatcher
+package io.github.stream29.vibekoog.dispatcher
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

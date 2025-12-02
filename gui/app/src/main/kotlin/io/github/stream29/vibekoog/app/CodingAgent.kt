@@ -1,4 +1,4 @@
-package io.github.stream29.kode.app
+package io.github.stream29.vibekoog.app
 
 import ai.koog.agents.core.agent.AIAgent
 import ai.koog.agents.core.agent.singleRunStrategy
@@ -13,7 +13,7 @@ import ai.koog.prompt.executor.clients.anthropic.AnthropicModels
 import ai.koog.prompt.executor.llms.all.simpleAnthropicExecutor
 import ai.koog.prompt.params.LLMParams
 import ai.koog.rag.base.files.JVMFileSystemProvider
-import io.github.stream29.kode.app.viewmodel.MainViewModel
+import io.github.stream29.vibekoog.app.viewmodel.MainViewModel
 
 /**
  * Create a coding agent using Koog framework.

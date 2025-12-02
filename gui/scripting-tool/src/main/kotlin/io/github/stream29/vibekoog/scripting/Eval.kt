@@ -1,4 +1,4 @@
-package io.github.stream29.kode.scripting
+package io.github.stream29.vibekoog.scripting
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.Serializable
