@@ -24,4 +24,4 @@ include(":app")
 include(":scripting-tool")
 include(":virtual-thread-dispatcher")
 
-rootProject.name = "Kode"
+rootProject.name = "VibeKoog-GUI"
