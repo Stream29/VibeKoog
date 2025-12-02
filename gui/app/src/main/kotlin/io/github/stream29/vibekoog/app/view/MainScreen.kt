@@ -36,21 +36,7 @@ public fun MainScreen(state: MainViewModel) {
                         label = {
                             Text(if (state.isWaitingForInput) "Enter response..." else "Enter task")
                         },
-                        modifier = Modifier.weight(1f).onKeyEvent { keyEvent ->
-                            if (keyEvent.type == KeyEventType.KeyDown && 
-                                keyEvent.isCtrlPressed && 
-                                keyEvent.key == Key.Enter) {
-                                // Trigger run or submit based on current state
-                                if (state.isWaitingForInput) {
-                                    state.submitInput()
-                                } else {
-                                    state.runTask()
-                                }
-                                true // Consume the event
-                            } else {
-                                false // Don't consume other events
-                            }
-                        },
+                        modifier = Modifier.weight(1f),
                         enabled = !state.isRunning || state.isWaitingForInput,
                         singleLine = true
                     )
