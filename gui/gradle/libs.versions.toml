@@ -1,0 +1,65 @@
+# Version catalog is a central place for you to declare and version dependencies
+# https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
+
+[versions]
+kotlin = "2.2.21"
+kotlinxSerialization = "1.9.0"
+kotlinxCoroutines = "1.10.2"
+koog = "0.5.0"
+ktor = "3.3.2"
+ivy = "2.5.3"
+kaml = "0.104.0"
+compose = "1.9.3"
+androidx-lifecycle = "2.9.4"
+
+[libraries]
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
+
+kotlinxCoroutinesCore = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinxCoroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
+
+androidxViewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+androidxViewmodelCompose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+
+# Koog framework
+koogAgents = { module = "ai.koog:koog-agents", version.ref = "koog" }
+ktorClientCio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+
+# Kotlin scripting
+kotlinScriptingJvmHost = { module = "org.jetbrains.kotlin:kotlin-scripting-jvm-host", version.ref = "kotlin" }
+kotlinMainKts = { module = "org.jetbrains.kotlin:kotlin-main-kts", version.ref = "kotlin" }
+apacheIvy = { module = "org.apache.ivy:ivy", version.ref = "ivy" }
+
+# Testing
+kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinxCoroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+
+[bundles]
+koog = [
+    "koogAgents",
+    "ktorClientCio"
+]
+kotlinScripting = [
+    "kotlinScriptingJvmHost",
+    "kotlinMainKts",
+    "apacheIvy"
+]
+compose = [
+    "androidxViewmodel",
+    "androidxViewmodelCompose",
+    "kotlinxCoroutinesSwing"
+]
+serialization = [
+    "kaml",
+    "kotlinxSerializationJson"
+]
+testing = ["kotlinTest", "kotlinxCoroutinesTest"]
+
+[plugins]
+kotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinPluginCompose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
