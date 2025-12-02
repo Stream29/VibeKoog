@@ -3,4 +3,4 @@
 	url = https://github.com/JetBrains/koog.git
 [submodule "tui/reference/SimpleMainKts"]
 	path = tui/reference/SimpleMainKts
-	url = git@github.com:Stream29/SimpleMainKts.git
+	url = https://github.com/Stream29/SimpleMainKts.git
