@@ -45,5 +45,5 @@ bin/
 .DS_Store
 
 ## Local config
-/.idea/
+.idea
 /tui/local.properties
