@@ -36,7 +36,26 @@ public fun MainScreen(state: MainViewModel) {
                         label = {
                             Text(if (state.isWaitingForInput) "Enter response..." else "Enter task")
                         },
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f)
+                            .onKeyEvent { event ->
+                                if (event.isCtrlPressed && event.key == Key.Enter && event.type == KeyEventType.KeyDown) {
+                                    val isInputValid = state.taskInput.isNotBlank()
+                                    val canClick = if (state.isWaitingForInput) isInputValid else (!state.isRunning && isInputValid)
+                                    
+                                    if (canClick) {
+                                        if (state.isWaitingForInput) {
+                                            state.submitInput()
+                                        } else {
+                                            state.runTask()
+                                        }
+                                        true // Consume the event
+                                    } else {
+                                        false
+                                    }
+                                } else {
+                                    false
+                                }
+                            },
                         enabled = !state.isRunning || state.isWaitingForInput,
                         singleLine = true
                     )
